@@ -32,7 +32,7 @@ jobs:
         run: dotnet publish -c Release -o ../published
 
       - name: Build Blazor Api
-        run: dotnet publish ../API -c Release -o ../api
+        run: dotnet publish ../API -c Release -o ../api/published
 
       - name: Build And Deploy
         id: builddeploy
@@ -46,7 +46,7 @@ jobs:
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "published/wwwroot" # App source code path
-          api_location: "api/bin/Release/net5.0" # Api source code path - optional
+          api_location: "api/published" # Api source code path - optional
           output_location: "published/wwwroot" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
