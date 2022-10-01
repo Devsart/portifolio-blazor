@@ -1,0 +1,14 @@
+.card {
+    height: 20rem;
+    width: 15rem;
+    border-radius: 4px;
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+.card-img{
+    background-size:15rem;
+    height:13rem;
+    width:14rem;
+    margin-top:5px;
+    margin-left:auto;
+    margin-right:auto;
+}

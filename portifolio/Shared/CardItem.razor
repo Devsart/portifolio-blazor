@@ -1,0 +1,20 @@
+﻿<div class="card mt-4" role="article">
+    <img class="card-img" aria-hidden="true" src=@ImageURI />
+    <strong><a target="_blank" class="font-weight-bold ml-2" href=@URI> @Title</a></strong>
+
+    <span class="text-nowrap ml-2">
+        @Description
+    </span>
+</div>
+
+@code {
+    // Demonstrates how a parent component can supply parameters
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public string Description { get; set; }
+    [Parameter]
+    public string ImageURI { get; set; }
+    [Parameter]
+    public string URI { get; set; }
+}
