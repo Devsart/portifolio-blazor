@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Github",
+    "section": "principals",
+    "description": "Follow for more",
+    "uri": "http://github.com/DevSart",
+    "imageURI": "images/github.jpg"
+  },
+  {
+    "title": "TimescaleDB",
+    "section": "ai",
+    "description": "Here you can learn how to use TimescaleDB to tame yout Time Series Data!",
+    "uri": "https://medium.com/p/ef52dfae717c",
+    "imageURI": "https://yt3.ggpht.com/ICLS71wGEIN1IoRp2df5FWIlq0_hhp28B4QU55qweXFdg7yoiU7Z-ZsqJKVpDxXwILBwywoTFyI=s900-c-k-c0x00ffffff-no-rj"
+  }
+]

@@ -1,9 +1,14 @@
-﻿<div class="card mt-4" role="article">
-    <img class="card-img" aria-hidden="true" src=@ImageURI />
-    <strong><a target="_blank" class="font-weight-bold ml-2" href=@URI> @Title</a></strong>
+﻿<div class="card mt-2 mb-2">
+    <a href=@URI>
+        <div class="card-glass"></div>
+    </a>
+    <span class="text-center" role="article">
+        <img class="card-img" aria-hidden="true" src=@ImageURI />
+        <strong><span class="font-weight-bold mt-2 mb-2 text-xl-center" > @Title</span></strong><br />
 
-    <span class="text-nowrap ml-2">
-        @Description
+        <span class="text-justify w-100">
+            @Description
+        </span>
     </span>
 </div>
 

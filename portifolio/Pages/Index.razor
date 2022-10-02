@@ -1,6 +1,7 @@
 ﻿@page "/"
+@inject HttpClient Http
 
-<div>
+<div class="w-100" style="background-color:#000">
     <h2 class="mt-5">Welcome!</h2>
 
     <p>
@@ -10,9 +11,47 @@
         I have a feeling that social media are making things ephemeral. Nowadays, having a blog or a channel may be an act of resistance, and so we do.
     </p>
     <p>
-        If you don't know me, I'm a mechanical engineer graduated from UFRJ and Msc in computer science at UFPB. I'm actually working with data science and machine learning projects, so we'll have a lot of stuff like this here. I hope you enjoy it. 
+        If you don't know me, I'm a mechanical engineer graduated from UFRJ and Msc in computer science at UFPB. I'm actually working with data science and machine learning projects, so we'll have a lot of stuff like this here. I hope you enjoy it.
     </p>
 
 </div>
+@if (principals == null)
+{
+    <p><em>Loading...</em></p>
+}
+else { 
+<div class="w-100 h-100 d-flex flex-wrap">
+    @foreach (var principal in principals)
+    {
+        if (principal.Section == "principals")
+        {
+            <CardItem Title=@principal.Title Description=@principal.Description URI=@principal.URI ImageURI=@principal.ImageURI></CardItem>
+        }
+        else { }
+    }
+</div>
 
-<CardItem Title="Github" Description="Siga para mais informações" URI="http://github.com/DevSart" ImageURI="images/github.jpg"></CardItem>
+}
+
+@code {
+
+    private Publication[] principals;
+
+    protected override async Task OnInitializedAsync()
+    {
+        principals = await Http.GetFromJsonAsync<Publication[]>("sample-data/publication.json");
+    }
+
+    class Publication
+    {
+        public string Title { get; set; }
+
+        public string Section { get; set; }
+
+        public string Description { get; set; }
+
+        public string URI { get; set; }
+
+        public string ImageURI { get; set; }
+    }
+}

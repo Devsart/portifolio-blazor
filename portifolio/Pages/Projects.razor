@@ -1,0 +1,51 @@
+﻿@page "/projects"
+@inject HttpClient Http
+
+<div class="w-100" style="background-color:#000">
+    <h2 class="mt-5">Projects</h2>
+
+</div>
+@if (projects == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="w-100 h-100 d-flex flex-wrap">
+        @foreach (var project in projects)
+        {
+            Console.WriteLine(project.Section);
+            if (project.Section == "projects")
+            {
+            <CardItem Title=@project.Title Description=@project.Description URI=@project.URI ImageURI=@project.ImageURI ></CardItem>
+            }
+            else { }
+        }
+    </div>
+
+}
+
+@code {
+
+    private Publication[] projects;
+
+    protected override async Task OnInitializedAsync()
+    {
+        projects = await Http.GetFromJsonAsync<Publication[]>("sample-data/publication.json");
+        
+    }
+
+
+    public class Publication
+    {
+        public string Title { get; set; }
+
+        public string Section { get; set; }
+
+        public string Description { get; set; }
+
+        public string URI { get; set; }
+
+        public string ImageURI { get; set; }
+    }
+}
