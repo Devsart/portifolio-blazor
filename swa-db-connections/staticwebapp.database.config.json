@@ -24,5 +24,15 @@
         }
       }
     },
-    "entities": {}
+    "entities": {
+        "Publicacao": {
+          "source": "Publicacoes",
+          "permissions": [
+            {
+              "actions": [ "*" ],
+              "role": "anonymous"
+            }
+          ]
+        }
+    }
   }
