@@ -1,0 +1,9 @@
+type Publicacao @model {
+  id: ID
+  title: String
+  section: String
+  description: String
+  text: String
+  uri: String
+  imageURI: String
+}
