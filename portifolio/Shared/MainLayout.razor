@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject HttpClient Http
 
 <div class="page">
     <div class="sidebar">
@@ -12,3 +13,30 @@
         </div>
     </div>
 </div>
+
+@code {
+
+    private Publication[] publicacoes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        publicacoes = await Http.GetFromJsonAsync<Publication[]>("sample-data/publication.json");
+
+    }
+
+
+    public class Publication
+    {
+        public string Title { get; set; }
+
+        public string Section { get; set; }
+
+        public string Description { get; set; }
+
+        public string Text { get; set; }
+
+        public string URI { get; set; }
+
+        public string ImageURI { get; set; }
+    }
+}
