@@ -16,7 +16,7 @@
       "host": {
         "mode": "production",
         "cors": {
-          "origins": ["*"],
+          "origins": ["https://ashy-wave-0cd79f41e.2.azurestaticapps.net/"],
           "allow-credentials": false
         },
         "authentication": {
