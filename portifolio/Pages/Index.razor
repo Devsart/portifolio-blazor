@@ -21,7 +21,7 @@
 }
 else { 
 <div class="w-100 h-100 d-flex flex-wrap">
-    @foreach (var principal in principals)
+    @foreach (var principal in Items1)
     {
         if (principal.Section == "principals")
         {
@@ -34,6 +34,8 @@ else {
 }
 
 @code {
+    [CascadingParameter(Name = "CascadeItems")]
+    protected List<Items>? Items1 { get; set; }
 
     private Publication[] principals;
 
@@ -54,4 +56,16 @@ else {
 
         public string ImageURI { get; set; }
     }
+    public class Items
+    {
+        public string Title { get; set; }
+
+        public string Section { get; set; }
+
+        public string Description { get; set; }
+
+        public string URI { get; set; }
+
+        public string ImageURI { get; set; }
+    };
 }

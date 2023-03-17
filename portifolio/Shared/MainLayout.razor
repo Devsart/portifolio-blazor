@@ -1,5 +1,10 @@
 ﻿@inherits LayoutComponentBase
 @inject HttpClient Http
+@using GraphQL
+@using GraphQL.Client.Http
+@using GraphQL.Client.Serializer.Newtonsoft
+@using Newtonsoft.Json;
+
 
 <div class="page">
     <div class="sidebar">
@@ -7,25 +12,62 @@
     </div>
 
     <div class="main">
-
-        <div class="content px-4">
-            @Body
-        </div>
+        <CascadingValue Value="@items" Name="CascadeItems">
+            <div class="content px-4">
+                @Body
+            </div>
+        </CascadingValue>
     </div>
 </div>
 
 @code {
-
-    private Publication[] publicacoes;
-
     protected override async Task OnInitializedAsync()
     {
-        publicacoes = await Http.GetFromJsonAsync<Publication[]>("sample-data/publication.json");
+        var graphQLHttpClientOptions = new GraphQLHttpClientOptions
+        {
+            EndPoint = new Uri("http://localhost:4280/data-api/graphql")
+        };
 
+        var httpClient = new HttpClient();
+        ;
+
+        var graphQLClient = new GraphQLHttpClient(graphQLHttpClientOptions, new NewtonsoftJsonSerializer(), httpClient);
+
+        var movieRequest = new GraphQLRequest
+        {
+            Query = @"
+        {
+            publicacaos {
+                items{
+                    id
+                    title
+                    section
+                    description
+                    uri
+                    imageURI
+                }
+            }
+        }
+    "
+        };
+
+        var graphQLResponse = await graphQLClient.SendQueryAsync<GraphQLPublicationResponse>(movieRequest);
+
+        List<Items> items = graphQLResponse.Data.Publicacaos.Items;
     }
 
+    public class Publicacaos
+    {
+        public List<Items> Items { get; set; }
+    };
+    public class GraphQLPublicationResponse
+    {
 
-    public class Publication
+        public Publicacaos Publicacaos { get; set; }
+
+    };
+
+    public class Items
     {
         public string Title { get; set; }
 
@@ -33,10 +75,8 @@
 
         public string Description { get; set; }
 
-        public string Text { get; set; }
-
         public string URI { get; set; }
 
         public string ImageURI { get; set; }
-    }
+    };
 }

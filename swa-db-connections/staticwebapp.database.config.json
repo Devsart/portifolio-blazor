@@ -8,15 +8,19 @@
           "schema": "staticwebapp.database.schema.gql"
       }
     },
+    "commandName": "Project",
+    "commandLineArgs": "--cors * --port 7088",
+    "launchBrowser": false,
     "runtime": {
       "graphql": {
         "allow-introspection": true,
+        "enabled": true,
         "path": "/graphql"
       },
       "host": {
         "mode": "production",
         "cors": {
-          "origins": ["https://ashy-wave-0cd79f41e.2.azurestaticapps.net/"],
+          "origins": ["http://localhost:4280"],
           "allow-credentials": false
         },
         "authentication": {

@@ -1,6 +1,10 @@
 ﻿@page "/ai"
 
 @inject HttpClient Http
+@using GraphQL
+@using GraphQL.Client.Http
+@using GraphQL.Client.Serializer.Newtonsoft
+@using Newtonsoft.Json;
 
 <div class="w-100" style="background-color:#000">
     <h2 class="mt-5">Artificial Inteligence and Data Science</h2>
@@ -12,30 +16,72 @@
 }
 else
 {
-<div class="w-100 h-100 d-flex flex-wrap">
-    @foreach (var principal in principals)
-    {
-        if (principal.Section == "ai")
+    <div class="w-100 h-100 d-flex flex-wrap">
+        @foreach (var principal in principals)
         {
-            <CardItem Title=@principal.Title Description=@principal.Description URI=@principal.URI ImageURI=@principal.ImageURI></CardItem>
+            if (principal.Section == "ai")
+            {
+                <CardItem Title=@principal.Title Description=@principal.Description URI=@principal.URI ImageURI=@principal.ImageURI></CardItem>
+            }
+            else { }
         }
-        else { }
-    }
-</div>
+    </div>
 
 }
 
 @code {
 
-    private Publication[] principals;
-
+    List<Items> principals;
     protected override async Task OnInitializedAsync()
     {
-        principals = await Http.GetFromJsonAsync<Publication[]>("sample-data/publication.json");
+        var graphQLHttpClientOptions = new GraphQLHttpClientOptions
+        {
+            EndPoint = new Uri("http://localhost:4280/data-api/graphql")
+        };
+
+        var httpClient = new HttpClient();
+        ;
+
+        var graphQLClient = new GraphQLHttpClient(graphQLHttpClientOptions, new NewtonsoftJsonSerializer(), httpClient);
+
+        var movieRequest = new GraphQLRequest
+        {
+            Query = @"
+{
+    publicacaos {
+        items{
+            id
+            title
+            section
+            description
+            uri
+            imageURI
+        }
+    }
+}
+"
+        };
+
+        var graphQLResponse = await graphQLClient.SendQueryAsync<GraphQLPublicationResponse>(movieRequest);
+
+        List<Items> items = graphQLResponse.Data.Publicacaos.Items;
+        principals = items;
     }
 
+    public class Publicacaos
+    {
+        public List<Items>
+    Items
+        { get; set; }
+    };
+    public class GraphQLPublicationResponse
+    {
 
-    public class Publication
+        public Publicacaos Publicacaos { get; set; }
+
+    };
+
+    public class Items
     {
         public string Title { get; set; }
 
@@ -46,5 +92,5 @@ else
         public string URI { get; set; }
 
         public string ImageURI { get; set; }
-    }
+    };
 }
