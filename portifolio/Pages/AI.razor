@@ -21,7 +21,7 @@ else
         {
             if (principal.Section == "ai")
             {
-                <CardItem Title=@principal.Title Description=@principal.Description URI=@principal.URI ImageURI=@principal.ImageURI></CardItem>
+                <CardItem Title=@principal.Title Description=@principal.Description URI=@principal.Uri ImageURI=@principal.ImageURI></CardItem>
             }
             else { }
         }
@@ -89,7 +89,7 @@ else
 
         public string Description { get; set; }
 
-        public string URI { get; set; }
+        public string Uri { get; set; }
 
         public string ImageURI { get; set; }
     };

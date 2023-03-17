@@ -12,11 +12,9 @@
     </div>
 
     <div class="main">
-        <CascadingValue Value="@items" Name="CascadeItems">
             <div class="content px-4">
                 @Body
             </div>
-        </CascadingValue>
     </div>
 </div>
 
@@ -53,12 +51,13 @@
 
         var graphQLResponse = await graphQLClient.SendQueryAsync<GraphQLPublicationResponse>(movieRequest);
 
-        List<Items> items = graphQLResponse.Data.Publicacaos.Items;
+        Items[] items = graphQLResponse.Data.Publicacaos.Items;
+        Console.WriteLine(items.First());
     }
 
     public class Publicacaos
     {
-        public List<Items> Items { get; set; }
+        public Items[] Items { get; set; }
     };
     public class GraphQLPublicationResponse
     {
@@ -75,7 +74,7 @@
 
         public string Description { get; set; }
 
-        public string URI { get; set; }
+        public string Uri { get; set; }
 
         public string ImageURI { get; set; }
     };
