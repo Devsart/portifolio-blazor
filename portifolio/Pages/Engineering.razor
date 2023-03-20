@@ -1,49 +1,36 @@
 ﻿@page "/engineering"
 @inject HttpClient Http
 
-<div class="w-100" style="background-color:#000">
-    <h2 class="mt-5">Mechanical Engineering</h2>
+    <div class="animated-content">
+        <div class="w-100" style="background-color:#000">
+            <h3 class="mt-5">Engenharia Mecânica</h3>
 
-</div>
-@if (principals == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-<div class="w-100 h-100 d-flex flex-wrap">
-    @foreach (var principal in principals)
-    {
-        if (principal.Section == "engineering")
+        </div>
+        @if (principals == null)
         {
-            <CardItem Title=@principal.Title Description=@principal.Description URI=@principal.URI ImageURI=@principal.ImageURI></CardItem>
+            <p><em>Loading...</em></p>
         }
-        else { }
-    }
-</div>
+        else
+        {
+            <div class="w-100 h-100 d-flex flex-wrap">
+                @foreach (var principal in principals)
+                {
+                    if (principal.Section == "engineering")
+                    {
+                        <CardItem Title=@principal.Title Description=@principal.Description URI=@principal.Uri ImageURI=@principal.ImageURI></CardItem>
+                    }
+                    else { }
+                }
+            </div>
 
-}
+        }
+    </div>
 
-@code {
+        @code {
+            protected override async Task OnInitializedAsync()
+            {
+            }
+            [CascadingParameter]
+            protected List<MainLayout.Items> principals { get; set; }
 
-    private Publication[] principals;
-
-    protected override async Task OnInitializedAsync()
-    {
-        principals = await Http.GetFromJsonAsync<Publication[]>("sample-data/publication.json");
-    }
-
-    public class Publication
-    {
-        public string Title { get; set; }
-
-        public string Section { get; set; }
-
-        public string Description { get; set; }
-
-        public string URI { get; set; }
-
-        public string ImageURI { get; set; }
-    }
-
-}
+        }

@@ -2,7 +2,7 @@
 @inject HttpClient Http
 
 <div class="w-100" style="background-color:#000">
-    <h2 class="mt-5">Projects</h2>
+    <h3 class="mt-5">Projetos</h3>
 
 </div>
 @if (projects == null)
@@ -17,7 +17,7 @@ else
             Console.WriteLine(project.Section);
             if (project.Section == "projects")
             {
-            <CardItem Title=@project.Title Description=@project.Description URI=@project.URI ImageURI=@project.ImageURI ></CardItem>
+            <CardItem Title=@project.Title Description=@project.Description URI=@project.Uri ImageURI=@project.ImageURI ></CardItem>
             }
             else { }
         }
@@ -27,25 +27,10 @@ else
 
 @code {
 
-    private Publication[] projects;
 
+    [CascadingParameter]
+    protected List<MainLayout.Items> projects { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        projects = await Http.GetFromJsonAsync<Publication[]>("sample-data/publication.json");
-        
-    }
-
-
-    public class Publication
-    {
-        public string Title { get; set; }
-
-        public string Section { get; set; }
-
-        public string Description { get; set; }
-
-        public string URI { get; set; }
-
-        public string ImageURI { get; set; }
     }
 }

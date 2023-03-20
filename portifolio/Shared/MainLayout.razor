@@ -12,18 +12,21 @@
     </div>
 
     <div class="main">
+        <CascadingValue Value="@principals">
             <div class="content px-4">
                 @Body
             </div>
+        </CascadingValue>
     </div>
 </div>
 
 @code {
+    List<Items> principals;
     protected override async Task OnInitializedAsync()
     {
         var graphQLHttpClientOptions = new GraphQLHttpClientOptions
         {
-            EndPoint = new Uri("http://localhost:4280/data-api/graphql")
+            EndPoint = new Uri(Http.BaseAddress + "data-api/graphql")
         };
 
         var httpClient = new HttpClient();
@@ -34,30 +37,32 @@
         var movieRequest = new GraphQLRequest
         {
             Query = @"
-        {
-            publicacaos {
-                items{
-                    id
-                    title
-                    section
-                    description
-                    uri
-                    imageURI
-                }
-            }
+{
+    publicacaos {
+        items{
+            id
+            title
+            section
+            description
+            uri
+            imageURI
         }
-    "
+    }
+}
+"
         };
 
         var graphQLResponse = await graphQLClient.SendQueryAsync<GraphQLPublicationResponse>(movieRequest);
 
-        Items[] items = graphQLResponse.Data.Publicacaos.Items;
-        Console.WriteLine(items.First());
+        List<Items> items = graphQLResponse.Data.Publicacaos.Items;
+        principals = items;
     }
 
     public class Publicacaos
     {
-        public Items[] Items { get; set; }
+        public List<Items>
+    Items
+        { get; set; }
     };
     public class GraphQLPublicationResponse
     {

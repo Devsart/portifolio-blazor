@@ -1,57 +1,47 @@
 ﻿@page "/"
 @inject HttpClient Http
+    <div class="animated-content">
+        <div class="w-100" style="background-color:#000">
+            <b><h3 class="mt-5">Inicio</h3></b>
 
-<div class="w-100" style="background-color:#000">
-    <h2 class="mt-5">Welcome!</h2>
+            <p>
+                Este site tem como objetivo compartilhar conhecimento e registrar algumas notas pessoais.
+            </p>
+            <p>
+                Se você não me conhece, eu sou o Matheus! Sou engenheiro mecânico formado pela Universidade Federal do Rio de Janeiro (UFRJ) e mestrando em ciência da computação pela Universidade Federal da Paraíba (UFPB). Atualmente, estou trabalhando com projetos de ciência de dados e aprendizado de máquina, então teremos algumas coisas neste escopo por aqui.
+            </p>
+            <p>
+                Nas horas vagas, também me dedico a alguns projetos artísticos e sociais, os quais estarei trazendo aqui em algum momento. Espero que você goste.
+            </p>
+            <h5 class="mt-5">Destaques:</h5>
 
-    <p>
-        This website have the purpose of sharing knowledge and record some notes.
-    </p>
-    <p>
-        I have a feeling that social media are making things ephemeral. Nowadays, having a blog or a channel may be an act of resistance, and so we do.
-    </p>
-    <p>
-        If you don't know me, I'm a mechanical engineer graduated from UFRJ and Msc in computer science at UFPB. I'm actually working with data science and machine learning projects, so we'll have a lot of stuff like this here. I hope you enjoy it.
-    </p>
-
-</div>
-@if (principals == null)
-{
-    <p><em>Loading...</em></p>
-}
-else { 
-<div class="w-100 h-100 d-flex flex-wrap">
-    @foreach (var principal in principals)
-    {
-        if (principal.Section == "principals")
+        </div>
+        @if (principals == null)
         {
-            <CardItem Title=@principal.Title Description=@principal.Description URI=@principal.Uri ImageURI=@principal.ImageURI></CardItem>
+            <p><em>Carregando...</em></p>
         }
-        else { }
-    }
-</div>
+        else
+        {
+            <div class="w-100 h-100 d-flex flex-wrap">
+                @foreach (var principal in principals)
+                {
+                    if (principal.Section == "principals")
+                    {
+                        <CardItem Title=@principal.Title Description=@principal.Description URI=@principal.Uri ImageURI=@principal.ImageURI></CardItem>
+                    }
+                    else { }
+                }
+            </div>
 
-}
+        }
+        </div>
 
-@code {
+        @code {
 
-    private Publication[] principals;
+            protected override async Task OnInitializedAsync()
+            {
+            }
 
-    protected override async Task OnInitializedAsync()
-    {
-        principals = await Http.GetFromJsonAsync<Publication[]>("sample-data/publication.json");
-    }
-
-    class Publication
-    {
-        public string Title { get; set; }
-
-        public string Section { get; set; }
-
-        public string Description { get; set; }
-
-        public string Uri { get; set; }
-
-        public string ImageURI { get; set; }
-    }
-}
+            [CascadingParameter]
+            protected List<MainLayout.Items> principals { get; set; }
+        }
