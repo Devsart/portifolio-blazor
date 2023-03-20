@@ -36,7 +36,7 @@ else
     {
         var graphQLHttpClientOptions = new GraphQLHttpClientOptions
         {
-            EndPoint = new Uri("http://localhost:4280/data-api/graphql")
+            EndPoint = new Uri(Http.BaseAddress + "data-api/graphql")
         };
 
         var httpClient = new HttpClient();
